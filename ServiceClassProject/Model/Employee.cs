@@ -8,7 +8,7 @@ namespace ServiceClassProject.Model;
 
 public class Employee : Account
 {
-    // Constructor for creating a Customer object with a specified username and password.
+    // Constructor for creating a employee object with a specified username and password.
     public Employee(string na, string pa)
     {
         // Initialize the username and password fields with the provided values.
@@ -19,8 +19,8 @@ public class Employee : Account
         // This allows the system to verify login credentials during the authentication process.
         loginPairs.Add(username, password);
 
-        // Add the username and the corresponding Customer object to the accountList dictionary.
-        // This enables quick access to the Customer object associated with a given username.
+        // Add the username and the corresponding Employee object to the accountList dictionary.
+        // This enables quick access to the Employee object associated with a given username.
         accountList.Add(username, this);
 
     }
