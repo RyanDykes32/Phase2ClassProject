@@ -228,9 +228,9 @@ public class Program
     static void MakeNewBooking()
     {
         Console.WriteLine("Available Cars:");
-        Console.WriteLine("1. Car1 - $20 per hour");
-        Console.WriteLine("2. Car2 - $25 per hour");
-        Console.WriteLine("3. Car3 - $30 per hour");
+        Console.WriteLine("1. Truck - $10 per hour");
+        Console.WriteLine("2. SUV - $15 per hour");
+        Console.WriteLine("3. Sedan - $20 per hour");
 
         Console.Write("Enter the number of the car you want to book: ");
         if (int.TryParse(Console.ReadLine(), out int selectedCarNumber) && selectedCarNumber >= 1 && selectedCarNumber <= 3)
@@ -286,11 +286,11 @@ public class Program
         switch (carNumber)
         {
             case 1:
-                return new Car { Name = "Truck", PricePerHour = 20 };
+                return new Car { Name = "Truck", PricePerHour = 10 };
             case 2:
-                return new Car { Name = "SUV", PricePerHour = 25 };
+                return new Car { Name = "SUV", PricePerHour = 15 };
             case 3:
-                return new Car { Name = "Sedan", PricePerHour = 30 };
+                return new Car { Name = "Sedan", PricePerHour = 20 };
             default:
                 return null;
         }
