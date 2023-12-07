@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace ServiceClassProject.Model;
 
-public class Customer
+public class Booking
 {
     private static int autoIncrement;
     public int Id { get; set; }
-    public string Username { get; set; }
-    public string Password { get; set; }
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
+    public DateTime StartTime { get; set; }
+    public int DurationInHours { get; set; }
+    public Car BookedCar { get; set; }
+    public decimal TotalPrice => DurationInHours * BookedCar.PricePerHour;
 
-    public Customer()
+    public Booking()
     {
         autoIncrement++;
         Id = autoIncrement;
