@@ -5,59 +5,54 @@ namespace ServiceClassProject;
 
 public class Program
 {
+    // Define class-level variables to store customer and booking information
     private static Customers customers;
     private static List<Booking> booking;
     private static List<CustomerBooking> customerbooking;
     private static Customer authenticatedCustomer;
 
+    // Main entry point of the program
     static void Main(string[] args)
     {
         Console.WriteLine("Initializing...");
-        Initialize();
-        Menu();
+        Initialize(); // Call the Initialize method to set up initial data
+        Menu(); // Call the main menu to start the program
     }
 
+    // Initialize method to set up initial data
     static void Initialize()
     {
-        var c1 = new Customer
-        {
-            FirstName = "Ryan",
-            LastName = "Dykes",
-            Username = "Ryan",
-            Password = "006189365"
-        };
-        var c2 = new Customer
-        {
-            FirstName = "Ben",
-            LastName = "Jones",
-            Username = "Ben",
-            Password = "1234"
-        };
+        // Create sample customers, bookings, and customer bookings
+        var c1 = new Customer { FirstName = "Ryan", LastName = "Dykes", Username = "Ryan", Password = "006189365" };
+        var c2 = new Customer { FirstName = "Ben", LastName = "Jones", Username = "Ben", Password = "1234" };
         var b1 = new Booking();
         var b2 = new Booking();
         var b3 = new Booking();
-
         var ca1 = new CustomerBooking(c1, b1);
         var ca2 = new CustomerBooking(c1, b2);
         var ca3 = new CustomerBooking(c2, b3);
 
+        // Initialize customer, booking, and customerbooking lists
         customers = new Customers();
         customers.customers.Add(c1);
         customers.customers.Add(c2);
-
         booking = new List<Booking> { b1, b2, b3 };
         customerbooking = new List<CustomerBooking> { ca1, ca2, ca3 };
     }
 
+    // Main menu for user interaction
     static void Menu()
     {
         bool done = false;
 
         while (!done)
         {
+            // Display menu options and get user input
             Console.WriteLine("Options: Login: (1) --- Logout: (2) --- Sign Up: (3) --- Booking: (4) --- Cancel Booking: (5) --- Clear Screen: (c) --- Quit: (q)");
             Console.Write("Choice: ");
             string choice = Console.ReadLine();
+
+            // Perform actions based on user choice
             switch (choice)
             {
                 case "1":
@@ -88,15 +83,22 @@ public class Program
         }
     }
 
+    // Method to handle login functionality
     static void LoginMenu()
     {
+        // Check if a user is already authenticated
         if (authenticatedCustomer == null)
         {
+            // Get username and password from the user
             Console.Write("Enter your username: ");
             string username = Console.ReadLine();
             Console.Write("Enter your password: ");
             string password = Console.ReadLine();
+
+            // Authenticate the user and set the authenticatedCustomer variable
             authenticatedCustomer = customers.Authenticate(username, password);
+
+            // Display welcome message or error
             if (authenticatedCustomer != null)
             {
                 Console.WriteLine($"Welcome {authenticatedCustomer.FirstName}");
@@ -112,14 +114,17 @@ public class Program
         }
     }
 
+    // Method to handle logout functionality
     static void LogoutMenu()
     {
         authenticatedCustomer = null;
         Console.WriteLine("Logged out!");
     }
 
+    // Method to handle user sign up
     static void SignUpMenu()
     {
+        // Get user information for sign up
         Console.Write("First Name: ");
         string firstName = Console.ReadLine();
         Console.Write("Last Name: ");
@@ -129,6 +134,7 @@ public class Program
         Console.Write("Password: ");
         string password = Console.ReadLine();
 
+        // Create a new customer and add it to the customers list
         var newCustomer = new Customer
         {
             FirstName = firstName,
@@ -142,6 +148,7 @@ public class Program
         Console.WriteLine("Profile created!");
     }
 
+    // Method to display and handle current bookings for the authenticated user
     static void GetCurrentBookingMenu()
     {
         if (authenticatedCustomer == null)
@@ -174,6 +181,7 @@ public class Program
         }
     }
 
+    // Method to handle cancellation of bookings for the authenticated user
     static void CancelBookingMenu()
     {
         if (authenticatedCustomer == null)
@@ -217,6 +225,7 @@ public class Program
         }
     }
 
+    // Method to cancel a booking
     static void CancelBooking(CustomerBooking bookingToCancel)
     {
         booking.Remove(bookingToCancel.booking);
@@ -225,6 +234,7 @@ public class Program
         Console.WriteLine("Booking successfully canceled!");
     }
 
+    // Method to handle the creation of a new booking
     static void MakeNewBooking()
     {
         Console.WriteLine("Available Cars:");
@@ -281,6 +291,7 @@ public class Program
         }
     }
 
+    // Method to get a car based on the provided car number
     static Car GetCarByNumber(int carNumber)
     {
         switch (carNumber)
@@ -296,6 +307,7 @@ public class Program
         }
     }
 
+    // Method to check if a car is available for booking at the specified time
     static bool IsCarAvailable(string selectedCar, DateTime bookingDate, int bookingDuration)
     {
         var existingBookingsForCar = booking.Where(b => b.BookedCar != null && b.BookedCar.Name == selectedCar);
@@ -316,5 +328,4 @@ public class Program
 
         return true; // The car is available
     }
-
 }
