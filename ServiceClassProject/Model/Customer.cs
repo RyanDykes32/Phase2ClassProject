@@ -6,22 +6,33 @@ using System.Threading.Tasks;
 
 namespace ServiceClassProject.Model;
 
-public class Customer : Account
+public class Customer
 {
-    // Constructor for creating a Customer object with a specified username and password.
-    public Customer(string na, string pa)
+    // A static variable to keep track of the next available ID for auto-incrementing.
+    private static int autoIncrement;
+
+    // Property to represent the unique identifier of a Customer.
+    // This property is auto-incremented, providing a unique ID for each customer.
+    public int Id { get; set; }
+
+    // Property to represent the username of a Customer.
+    public string Username { get; set; }
+
+    // Property to represent the password of a Customer.
+    public string Password { get; set; }
+
+    // Property to represent the first name of a Customer.
+    public string FirstName { get; set; }
+
+    // Property to represent the last name of a Customer.
+    public string LastName { get; set; }
+
+    // Constructor for the Customer class.
+    // Increments the autoIncrement counter and assigns the current value to the customer's ID.
+    public Customer()
     {
-        // Initialize the username and password fields with the provided values.
-        username = na;
-        password = pa;
-
-        // Add the username and password to the loginPairs dictionary.
-        // This allows the system to verify login credentials during the authentication process.
-        loginPairs.Add(username, password);
-
-        // Add the username and the corresponding Customer object to the accountList dictionary.
-        // This enables quick access to the Customer object associated with a given username.
-        accountList.Add(username, this);
+        autoIncrement++;
+        Id = autoIncrement;
     }
 
 }
