@@ -1,4 +1,4 @@
-﻿using ServiceClassProject.Model;
+using ServiceClassProject.Model;
 
 namespace ServiceClassProject;
 
