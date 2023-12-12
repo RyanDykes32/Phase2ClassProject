@@ -86,22 +86,20 @@ public class Program
     // Method to handle login functionality
     static void LoginMenu()
     {
-        // Check if a user is already authenticated
         if (authenticatedCustomer == null)
         {
-            // Get username and password from the user
             Console.Write("Enter your username: ");
             string username = Console.ReadLine();
             Console.Write("Enter your password: ");
             string password = Console.ReadLine();
-
-            // Authenticate the user and set the authenticatedCustomer variable
             authenticatedCustomer = customers.Authenticate(username, password);
-
-            // Display welcome message or error
             if (authenticatedCustomer != null)
             {
                 Console.WriteLine($"Welcome {authenticatedCustomer.FirstName}");
+
+                // Display the incentive points
+                int currentIncentivePoints = authenticatedCustomer.GetIncentivePoints();
+                Console.WriteLine($"Your current incentive points: {currentIncentivePoints}");
             }
             else
             {
@@ -111,8 +109,13 @@ public class Program
         else
         {
             Console.WriteLine($"You are already logged in as {authenticatedCustomer.Username}");
+
+            // Display the incentive points
+            int currentIncentivePoints = authenticatedCustomer.GetIncentivePoints();
+            Console.WriteLine($"Your current incentive points: {currentIncentivePoints}");
         }
     }
+
 
     // Method to handle logout functionality
     static void LogoutMenu()
@@ -238,16 +241,16 @@ public class Program
     static void MakeNewBooking()
     {
         Console.WriteLine("Available Cars:");
-        Console.WriteLine("1. Truck - $10 per hour");
-        Console.WriteLine("2. SUV - $15 per hour");
-        Console.WriteLine("3. Sedan - $20 per hour");
+        Console.WriteLine("1. 2019 Red Truck, LP:AECG768 - $10 per hour");
+        Console.WriteLine("2. 2021 Black SUV, LP:213JFW - $15 per hour");
+        Console.WriteLine("3. 2009 White Sedan LP:SDFG093 - $20 per hour");
 
         Console.Write("Enter the number of the car you want to book: ");
         if (int.TryParse(Console.ReadLine(), out int selectedCarNumber) && selectedCarNumber >= 1 && selectedCarNumber <= 3)
         {
             Car selectedCar = GetCarByNumber(selectedCarNumber);
 
-            Console.Write("Enter the date and time for the new booking (e.g., '2023-12-31 14:30'): ");
+            Console.Write("Enter the date and time for the new booking (e.g., '2023-12-31 12:30'): ");
             if (DateTime.TryParse(Console.ReadLine(), out DateTime bookingDate))
             {
                 Console.Write("Enter the duration of the booking in hours: ");
@@ -269,6 +272,9 @@ public class Program
 
                         Console.WriteLine($"Booking for {selectedCar.Name} on {bookingDate} for {bookingDuration} hours successfully created!");
                         Console.WriteLine($"Total Price: ${newBooking.TotalPrice}");
+                        // Award incentive points to the customer after a successful booking
+                        authenticatedCustomer.AwardIncentivePoints(customerbooking.Count);
+
                     }
                     else
                     {
@@ -288,7 +294,12 @@ public class Program
         else
         {
             Console.WriteLine("Invalid car number. Booking creation canceled.");
+            
+
         }
+
+      
+
     }
 
     // Method to get a car based on the provided car number
@@ -297,11 +308,11 @@ public class Program
         switch (carNumber)
         {
             case 1:
-                return new Car { Name = "Truck", PricePerHour = 10 };
+                return new Car { Name = "2019 Red Truck, LP:AECG768", PricePerHour = 10 };
             case 2:
-                return new Car { Name = "SUV", PricePerHour = 15 };
+                return new Car { Name = "2021 Black SUV, LP:213JFW", PricePerHour = 15 };
             case 3:
-                return new Car { Name = "Sedan", PricePerHour = 20 };
+                return new Car { Name = "2009 White Sedan LP:SDFG093", PricePerHour = 20 };
             default:
                 return null;
         }
