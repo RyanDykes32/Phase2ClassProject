@@ -27,12 +27,34 @@ public class Customer
     // Property to represent the last name of a Customer.
     public string LastName { get; set; }
 
+    // New property to track incentive points for the customer.
+    public int IncentivePoints { get; private set; }
+
     // Constructor for the Customer class.
     // Increments the autoIncrement counter and assigns the current value to the customer's ID.
     public Customer()
     {
         autoIncrement++;
         Id = autoIncrement;
+        // Initialize incentive points to 0 when a new customer is created.
+        IncentivePoints = 5;
     }
+    // Method to award incentive points to the customer based on the number of bookings made.
+    public void AwardIncentivePoints(int numberOfBookings)
+    {
+        
+        int pointsToAward = (numberOfBookings) * 5;
 
+        // Increment the incentive points for the customer.
+        IncentivePoints += pointsToAward;
+
+       
+
+
+    }
+    // Method to retrieve the current incentive points for the customer.
+    public int GetIncentivePoints()
+    {
+        return IncentivePoints;
+    }
 }
